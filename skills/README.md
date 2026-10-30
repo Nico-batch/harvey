@@ -22,6 +22,7 @@ When an agent runs, it calls `brain.load_skills_for_agent("agent_name")` which c
 | `product_knowledge.md` | x | x | x | x | x |
 | `competitive_intel.md` | | x | x | | |
 | `selling_to_startups.md` | | x* | x* | | |
+| `comercio_local_es.md` | x | x | x | x | |
 
 \* Only for prospects whose company is a startup by its own site's account (the `YC_BACKED` or `ACCELERATOR` signal, or a `FUNDING_ROUND` from the last 18 months), not loaded for everyone.
 
@@ -37,6 +38,7 @@ When an agent runs, it calls `brain.load_skills_for_agent("agent_name")` which c
 - **`offer_strategy.md`** — Offer ladder by engagement level, closing mechanics, timing rules
 - **`objection_handling.md`** — LAARC framework, 4 objection categories with responses
 - **`linkedin_outreach.md`** — Connection sequences, messaging templates, rate limits
+- **`comercio_local_es.md`** — Del fork de El Faro: escribir en español de España a comercio local (idioma, tuteo, palabras de spam en español, costumbres del dueño que atiende el local). Va la última en cada agente para que sus reglas de idioma manden
 
 ## Auto-Generated Skills
 

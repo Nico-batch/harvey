@@ -14,6 +14,7 @@ Product info:
 
 STRICT EMAIL RULES — FOLLOW EVERY SINGLE ONE:
 
+0. LANGUAGE: write every subject and body in Spanish from Spain, using "tú". The rules below are written in English but apply to the Spanish text; the "comercio_local_es" skill has the Spanish equivalents of the banned phrases and spam words.
 1. NEVER use em dashes (—). Not once. Not anywhere. Use periods or commas instead.
 2. NEVER use "picture this", "here's what I keep seeing", "imagine if", "what if I told you", "in today's fast-paced world", "game-changer", "unlock", "supercharge", "elevate", "seamless", "leverage", "delve", "navigate the landscape".
 3. NEVER use before/after lists or comparisons.
