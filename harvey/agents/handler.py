@@ -71,6 +71,55 @@ OPT_OUT_PATTERNS = (
     "never contact",
     "delete my info",
     "delete my data",
+    # Español y valenciano: el fork de El Faro escribe a negocios de Alicante.
+    # Solo frases enteras: «baja» suelta es subcadena de «trabaja», así que
+    # esa va en BARE_OPT_OUTS, que exige que sea toda la respuesta.
+    "dame de baja",
+    "darme de baja",
+    "dadme de baja",
+    "me doy de baja",
+    "me de de baja",
+    "me den de baja",
+    "quiero la baja",
+    "quiero darme de baja",
+    "no me escribas",
+    "no me escribais",
+    "no me escribáis",
+    "no me escriba",
+    "no me escriban",
+    "no me contactes",
+    "no me contacteis",
+    "no me contactéis",
+    "no me contacte",
+    "no me contacten",
+    "no vuelvas a escribir",
+    "no volvais a escribir",
+    "no volváis a escribir",
+    "no vuelva a escribir",
+    "no vuelvan a escribir",
+    "deja de escribir",
+    "dejad de escribir",
+    "deje de escribir",
+    "dejen de escribir",
+    "no quiero recibir",
+    "no deseo recibir",
+    "quitame de",
+    "quítame de",
+    "quitadme de",
+    "borra mis datos",
+    "borrad mis datos",
+    "borre mis datos",
+    "borren mis datos",
+    "elimina mis datos",
+    "eliminad mis datos",
+    "elimine mis datos",
+    "eliminen mis datos",
+    "suprimid mis datos",
+    "supriman mis datos",
+    "doneu-me de baixa",
+    "dona'm de baixa",
+    "no m'escrigues",
+    "no m'escriviu",
 )
 # "No thanks" (what cold email's footer asks for) as a phrase: not "no
 # Thanksgiving", "Bruno / Thanks," or "yes or no, thanks".
@@ -79,7 +128,8 @@ NO_THANKS_RE = re.compile(
     r"(?<!\bor )\bno,?[ \t]+thank(?:s|[ \t]+you)\b(?![ \t]+(?:needed|necessary|required))")
 # A reply that says only this (signature aside) is an opt-out ("Reply STOP").
 BARE_OPT_OUTS = {"stop", "unsubscribe", "remove", "remove me", "opt out",
-                 "no thanks", "no thank you"}
+                 "no thanks", "no thank you",
+                 "baja", "de baja", "la baja", "baixa", "no gracias"}
 _MOBILE_SIGNATURE_RE = re.compile(
     r"^[ \t]*(?:sent from my \w[^\n]*|get outlook for \w[^\n]*|sent from \w+ mail[^\n]*)$",
     re.IGNORECASE | re.MULTILINE)
@@ -187,6 +237,24 @@ ESCALATION_PATTERNS = (
     "gdpr",
     "can-spam",
     "blacklist",
+    # Español: una persona lee cualquier respuesta que suene a reclamación.
+    "abogado",
+    "abogada",
+    "denuncia",
+    "denunciar",
+    "demanda",
+    "acoso",
+    "acosando",
+    "aepd",
+    "protección de datos",
+    "proteccion de datos",
+    "rgpd",
+    "lopd",
+    "lssi",
+    "es spam",
+    "correo basura",
+    "advocat",
+    "denúncia",
 )
 
 

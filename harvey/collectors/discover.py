@@ -1064,6 +1064,20 @@ class OpenStreetMap(DiscoveryProvider):
         "attorney": ['office=lawyer'],
         "contractor": ['craft=builder', 'office=construction_company'],
         "landscap": ['craft=gardener', 'shop=garden_centre'],
+        # Fork de El Faro: el comercio con local a pie de calle de la provincia
+        # de Alicante, con los nombres en español que lleva icp.industries.
+        # «bares» y no «bar», que casaría con «barbería».
+        "restaurant": ['amenity=restaurant'],
+        "cafeter": ['amenity=cafe'],
+        "hamburgues": ['amenity=fast_food'],
+        "bares": ['amenity=bar', 'amenity=pub'],
+        "helader": ['amenity=ice_cream', 'shop=ice_cream'],
+        "pasteler": ['shop=pastry', 'shop=confectionery'],
+        "panader": ['shop=bakery'],
+        "moda": ['shop=clothes', 'shop=boutique'],
+        "bodega": ['craft=winery', 'shop=wine'],
+        "peluquer": ['shop=hairdresser'],
+        "gimnasio": ['leisure=fitness_centre'],
     }
 
     def _tags(self, term: str) -> list[str]:
