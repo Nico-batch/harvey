@@ -852,6 +852,84 @@ class Serper(DiscoveryProvider):
         return out
 
 
+class SerperMaps(DiscoveryProvider):
+    """Google Maps con la misma clave de Serper (fork de El Faro).
+
+    La búsqueda normal de Serper, para «restaurantes Alicante», devuelve
+    artículos y guías —ELLE, la Guía Michelin, GetYourGuide—: el 30/10/2026
+    dio 2 negocios de 64 resultados. Google Maps devuelve los locales con su
+    web: 10 de 10 en la misma prueba. Sin cuenta nueva, con los mismos
+    créditos gratis.
+    """
+
+    key = "serper_maps"
+    label = "Serper Google Maps"
+    kind = "listings"
+    blurb = ("Google Maps con la clave de Serper: locales con web, teléfono, "
+             "categoría y valoraciones. 10 por página, de los mismos 2.500 "
+             "créditos gratis.")
+    cost_note = "1 crédito por página de 10 locales; se estima a $0.001 la página"
+    free_tier = "comparte los 2.500 créditos gratis de Serper"
+    signup_url = "https://serper.dev"
+    env_keys = ("serper_api_key",)
+    caveat = ("Google Maps no dice si la ficha está reclamada. Un local cuya "
+              "«web» es su Instagram o su Facebook se guarda sin web.")
+
+    PAGE_SIZE = 10
+    MAX_PAGES = 3
+
+    def _page_count(self, query: DiscoveryQuery) -> int:
+        return max(1, min(self.MAX_PAGES, -(-query.limit // self.PAGE_SIZE)))
+
+    def estimate(self, queries):
+        return 0.001 * sum(self._page_count(q) for q in queries)
+
+    async def fetch(self, client, env, query):
+        out = []
+        for page in range(1, self._page_count(query) + 1):
+            r = await client.post(
+                "https://google.serper.dev/places",
+                headers={"X-API-KEY": env["serper_api_key"],
+                         "Content-Type": "application/json"},
+                json={"q": query.keyword(), "page": page},
+            )
+            r.raise_for_status()
+            places = r.json().get("places") or []
+            for item in places:
+                name = item.get("title") or ""
+                if not name:
+                    continue
+                site = item.get("website") or ""
+                domain = normalize_domain(site)
+                # Una red social no es la web del negocio: guardarla haría
+                # que is_junk tirara el local entero.
+                if domain and is_junk(domain):
+                    site, domain = "", ""
+                cid = str(item.get("cid") or "")
+                out.append(Business(
+                    name=name,
+                    domain=domain,
+                    website=site,
+                    phone=item.get("phoneNumber") or "",
+                    address=item.get("address") or "",
+                    location=query.location,
+                    category=item.get("category") or "",
+                    rating=item.get("rating"),
+                    review_count=item.get("ratingCount"),
+                    has_website=bool(site),
+                    maps_rank=item.get("position"),
+                    keyword=query.keyword(),
+                    external_id=f"gmaps_cid:{cid}" if cid else "",
+                    source_url=(f"https://maps.google.com/?cid={cid}" if cid else site),
+                    provider=self.key,
+                ))
+                if len(out) >= query.limit:
+                    return out
+            if len(places) < self.PAGE_SIZE:
+                break
+        return out
+
+
 class TinyFish(DiscoveryProvider):
     """TinyFish web search: free with a key, at 30 searches a minute and
     500 an hour. Results are TinyFish's own ordering for the phrase, from
@@ -1427,6 +1505,7 @@ PROVIDERS: dict[str, DiscoveryProvider] = {
         DataForSEOSerp(),
         DataForSEOMaps(),
         Serper(),
+        SerperMaps(),
         ScavioMaps(),
         ScavioSearch(),
     )
